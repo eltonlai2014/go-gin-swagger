@@ -14,3 +14,8 @@ body {
     margin: 0;
     background: #fafafa;
 }
+
+a.link[href$="swagger.yaml"],
+a.link[href$="test.yaml"] {
+    display: none !important;
+}

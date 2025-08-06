@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Markdown Preview</title>
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css"
+        rel="stylesheet" /> -->
+    <link href="/static/github-markdown.min.css" rel="stylesheet" />
+    <style>
+        body {
+            box-sizing: border-box;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .markdown-body {
+            min-width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <article class="markdown-body">
+        {{ .Content | safeHTML }}
+    </article>
+    <!-- <img src="{{ .ImageURL }}" alt="My Image" /> -->
+</body>
+
+</html>

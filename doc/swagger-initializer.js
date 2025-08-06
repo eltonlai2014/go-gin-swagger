@@ -4,8 +4,7 @@ window.onload = () => {
     dom_id: '#swagger-ui',
     displayExplorer: false,  // ← 加這一行
     presets: [
-      SwaggerUIBundle.presets.apis,
-      SwaggerUIStandalonePreset
+      SwaggerUIBundle.presets.apis
     ],
     layout: "BaseLayout"
   });

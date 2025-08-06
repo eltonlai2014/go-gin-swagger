@@ -1,0 +1,191 @@
+openapi: 3.0.3
+info:
+  title: Sample API
+  version: 1.0.0
+  description: 示例 API，包含各種 HTTP 方法與參數範例
+servers:
+  - url: /
+
+paths:
+  /users:
+    get:
+      summary: 取得使用者清單
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+          description: 顯示多少筆資料
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+          description: 起始位置
+      responses:
+        "200":
+          description: 成功回傳使用者清單
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+              example:
+                - id: 1
+                  name: Alice
+                  email: alice@example.com
+                - id: 2
+                  name: Bob
+                  email: bob@example.com
+
+    post:
+      summary: 建立新使用者
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreate"
+            example:
+              name: Charlie
+              email: charlie@example.com
+      responses:
+        "201":
+          description: 建立成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /users/{id}:
+    get:
+      summary: 取得特定使用者
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 使用者 ID
+      responses:
+        "200":
+          description: 成功回傳使用者資料
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example:
+                id: 1
+                name: Alice
+                email: alice@example.com
+        "404":
+          description: 找不到使用者
+          content:
+            application/json:
+              example:
+                error: "User not found"
+
+    put:
+      summary: 更新使用者資訊
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdate"
+            example:
+              name: Alice Updated
+              email: alice.updated@example.com
+      responses:
+        "200":
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+    delete:
+      summary: 刪除使用者
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: 刪除成功，無內容
+
+    patch:
+      summary: 部分更新使用者
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+            example:
+              name: Partial Name
+      responses:
+        "200":
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Alice
+        email:
+          type: string
+          example: alice@example.com
+
+    UserCreate:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        name:
+          type: string
+          example: Charlie
+        email:
+          type: string
+          example: charlie@example.com
+
+    UserUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: New Name
+        email:
+          type: string
+          example: new.email@example.com
